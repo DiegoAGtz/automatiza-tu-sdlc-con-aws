@@ -1,7 +1,6 @@
 baseURL = "https://CLOUDFRONT_DOMAIN"
 languageCode = "es"
 title = "Mi Blog AWS DevOps"
-theme = ""
 
 [markup]
   [markup.goldmark]
