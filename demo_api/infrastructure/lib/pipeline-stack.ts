@@ -1,4 +1,5 @@
 import * as cdk from "aws-cdk-lib";
+import * as codepipeline from "aws-cdk-lib/aws-codepipeline";
 import * as pipelines from "aws-cdk-lib/pipelines";
 import { Construct } from "constructs";
 import { ApiStack } from "./api-stack";
@@ -20,6 +21,7 @@ export class PipelineStack extends cdk.Stack {
 
     const pipeline = new pipelines.CodePipeline(this, "Pipeline", {
       pipelineName: "BooksApiPipeline",
+      pipelineType: codepipeline.PipelineType.V2,
       synth: new pipelines.ShellStep("Synth", {
         input: pipelines.CodePipelineSource.connection(repo, "main", {
           connectionArn,

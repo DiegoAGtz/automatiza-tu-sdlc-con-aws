@@ -26,18 +26,10 @@ export class HostingStack extends cdk.Stack {
       ],
     });
 
-    // Origin Access Identity para que CloudFront acceda al S3 privado
-    const oai = new cloudfront.OriginAccessIdentity(this, 'OAI', {
-      comment: `OAI for ${this.stackName}`,
-    });
-    this.siteBucket.grantRead(oai);
-
-    // CloudFront Distribution
+    // CloudFront Distribution (uses Origin Access Control via S3BucketOrigin)
     this.distribution = new cloudfront.Distribution(this, 'Distribution', {
       defaultBehavior: {
-        origin: new origins.S3Origin(this.siteBucket, {
-          originAccessIdentity: oai,
-        }),
+        origin: origins.S3BucketOrigin.withOriginAccessControl(this.siteBucket),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         compress: true,
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,

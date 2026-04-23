@@ -14,8 +14,7 @@
     ]
   },
   "context": {
-    "githubOwner": "",
-    "githubRepo": "",
-    "githubBranch": "main"
+    "connectionArn": "arn:aws:codeconnections:us-east-1:314146298455:connection/f1553bb3-39fc-407a-80de-84c2654ac672",
+    "repo": "diegoagtz/automatiza-tu-sdlc-con-aws"
   }
 }

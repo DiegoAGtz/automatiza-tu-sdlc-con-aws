@@ -10,16 +10,15 @@ import { Construct } from 'constructs';
 interface PipelineStackProps extends cdk.StackProps {
   siteBucket: s3.IBucket;
   distribution: cloudfront.IDistribution;
-  githubOwner: string;
-  githubRepo: string;
-  githubBranch: string;
+  connectionArn: string;
+  repo: string;
 }
 
 export class PipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: PipelineStackProps) {
     super(scope, id, props);
 
-    const { siteBucket, distribution, githubOwner, githubRepo, githubBranch } = props;
+    const { siteBucket, distribution, connectionArn, repo } = props;
 
     // Artifact bucket para CodePipeline (separado del site bucket)
     const artifactBucket = new s3.Bucket(this, 'ArtifactBucket', {
@@ -45,7 +44,7 @@ export class PipelineStack extends cdk.Stack {
         DISTRIBUTION_ID: { value: distribution.distributionId },
         HUGO_VERSION: { value: '0.121.0' },
       },
-      buildSpec: codebuild.BuildSpec.fromSourceFilename('buildspec.yml'),
+      buildSpec: codebuild.BuildSpec.fromSourceFilename('demo_hugo/buildspec.yml'),
       timeout: cdk.Duration.minutes(15),
     });
 
@@ -66,15 +65,14 @@ export class PipelineStack extends cdk.Stack {
     const sourceOutput = new codepipeline.Artifact('SourceOutput');
     const buildOutput = new codepipeline.Artifact('BuildOutput');
 
-    // GitHub source action (usa OAuth token de Secrets Manager)
-    const sourceAction = new codepipeline_actions.GitHubSourceAction({
+    // GitHub source via CodeStar Connection
+    const sourceAction = new codepipeline_actions.CodeStarConnectionsSourceAction({
       actionName: 'GitHub_Source',
-      owner: githubOwner,
-      repo: githubRepo,
-      branch: githubBranch,
-      oauthToken: cdk.SecretValue.secretsManager('github-token'),
+      connectionArn,
+      owner: repo.split('/')[0],
+      repo: repo.split('/')[1],
+      branch: 'main',
       output: sourceOutput,
-      trigger: codepipeline_actions.GitHubTrigger.WEBHOOK,
     });
 
     // CodeBuild action
@@ -87,6 +85,7 @@ export class PipelineStack extends cdk.Stack {
 
     // CodePipeline
     new codepipeline.Pipeline(this, 'Pipeline', {
+      pipelineType: codepipeline.PipelineType.V2,
       pipelineName: `${this.stackName}`,
       artifactBucket,
       stages: [
@@ -112,9 +111,9 @@ export class PipelineStack extends cdk.Stack {
       description: 'CodeBuild project name',
     });
 
-    new cdk.CfnOutput(this, 'SetupInstructions', {
-      value: 'Guarda tu GitHub token en Secrets Manager: aws secretsmanager create-secret --name github-token --secret-string "ghp_TU_TOKEN"',
-      description: 'Instrucciones para configurar el GitHub token',
+    new cdk.CfnOutput(this, 'ConnectionArn', {
+      value: connectionArn,
+      description: 'CodeStar Connection ARN used by the pipeline',
     });
   }
 }

@@ -24,15 +24,14 @@ const hosting = new HostingStack(app, `${projectName}-hosting`, {
   tags,
 });
 
-const githubOwner = app.node.tryGetContext('githubOwner') || process.env.GITHUB_OWNER || '';
-const githubRepo = app.node.tryGetContext('githubRepo') || process.env.GITHUB_REPO || '';
-const githubBranch = app.node.tryGetContext('githubBranch') || process.env.GITHUB_BRANCH || 'main';
+const connectionArn = app.node.tryGetContext('connectionArn') ?? '';
+const repo = app.node.tryGetContext('repo') ?? '';
 
-if (!githubOwner || !githubRepo) {
+if (!connectionArn || !repo) {
   console.warn(
-    '[+] GITHUB_OWNER y GITHUB_REPO son requeridos para el PipelineStack.\n' +
-    '    Configúralos como variables de entorno o CDK context.\n' +
-    '    Ejemplo: export GITHUB_OWNER=tu-usuario && export GITHUB_REPO=tu-repo'
+    '[+] connectionArn and repo are required for the PipelineStack.\n' +
+    '    Pass them via CDK context:\n' +
+    '    npx cdk deploy -c connectionArn="arn:aws:..." -c repo="owner/repo"'
   );
 }
 
@@ -42,7 +41,6 @@ new PipelineStack(app, `${projectName}-pipeline`, {
   tags,
   siteBucket: hosting.siteBucket,
   distribution: hosting.distribution,
-  githubOwner,
-  githubRepo,
-  githubBranch,
+  connectionArn,
+  repo,
 });

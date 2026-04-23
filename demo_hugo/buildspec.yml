@@ -20,7 +20,7 @@ phases:
   pre_build:
     commands:
       - echo "=== Pre-build checks ==="
-      - cd hugo-site
+      - cd demo_hugo/hugo-site
       - ls -la
 
   build:
@@ -41,7 +41,7 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: hugo-site/public
+  base-directory: demo_hugo/hugo-site/public
 
 cache:
   paths:
