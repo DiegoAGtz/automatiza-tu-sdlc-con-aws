@@ -7,7 +7,7 @@ description: "Cómo implementar CI/CD en AWS usando CodePipeline y CodeBuild"
 
 ## Por qué CI/CD importa
 
-El Continuous Integration y Continuous Deployment (CI/CD) es la columna vertebral de cualquier equipo de desarrollo moderno. Con AWS, puedes construir pipelines robustos y escalables con servicios nativos.
+El Continuous Integration y Continuous Deployment (CI/CD) es la columna vertebral de cualquier equipo de desarrollo moderno. Con AWS, puedes construir pipelines robustos y escalables con servicios nativos. Buenos días a todos.
 
 ### Los servicios clave
 
