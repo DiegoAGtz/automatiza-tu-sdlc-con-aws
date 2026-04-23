@@ -20,7 +20,6 @@ phases:
   pre_build:
     commands:
       - echo "=== Pre-build checks ==="
-      - git submodule update --init --recursive --depth 1
       - cd demo_hugo/hugo-site
       - ls -la themes/PaperMod/
 
