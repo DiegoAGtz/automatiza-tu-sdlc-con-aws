@@ -1,6 +1,6 @@
 ---
 title: "Libros Recomendados para DevOps Engineers"
-date: 2026-04-23T08:00:00-06:00
+date: 2026-04-22T12:00:00Z
 draft: false
 description: "Una seleccion de libros esenciales para ingenieros DevOps y desarrolladores cloud"
 ---

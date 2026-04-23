@@ -40,6 +40,7 @@ export class PipelineStack extends cdk.Stack {
         commands: [
           "npm install -g pnpm",
           "pnpm install --frozen-lockfile",
+          "pnpm -r test",
           "cd demo_api/infrastructure",
           "npx cdk synth",
         ],

@@ -1,6 +1,6 @@
 ---
 title: "Automatiza tu SDLC con AWS"
-date: 2026-04-23T09:00:00-06:00
+date: 2026-04-22T13:00:00Z
 draft: false
 description: "Como construimos este monorepo con dos pipelines independientes usando CDK y CodePipeline"
 ---
