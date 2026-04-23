@@ -73,7 +73,7 @@ export class PipelineStack extends cdk.Stack {
       repo: repo.split('/')[1],
       branch: 'main',
       output: sourceOutput,
-      triggerOnPush: false,
+      triggerOnPush: true,
     });
 
     // CodeBuild action
@@ -89,19 +89,6 @@ export class PipelineStack extends cdk.Stack {
       pipelineType: codepipeline.PipelineType.V2,
       pipelineName: `${this.stackName}`,
       artifactBucket,
-      triggers: [
-        {
-          providerType: codepipeline.ProviderType.CODE_STAR_SOURCE_CONNECTION,
-          gitConfiguration: {
-            sourceAction,
-            pushFilter: [
-              {
-                branchesIncludes: ['main'],
-              },
-            ],
-          },
-        },
-      ],
       stages: [
         {
           stageName: 'Source',
