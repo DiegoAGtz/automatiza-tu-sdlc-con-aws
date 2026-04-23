@@ -1,0 +1,21 @@
+{
+  "name": "demo-hugo-infrastructure",
+  "version": "1.0.0",
+  "description": "AWS CDK infrastructure for Hugo static site with CI/CD pipeline",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy --all",
+    "destroy": "cdk destroy --all"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.178.0",
+    "constructs": "^10.4.2"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.0",
+    "aws-cdk": "^2.178.0"
+  }
+}

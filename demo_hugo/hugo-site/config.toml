@@ -1,0 +1,17 @@
+baseURL = "https://CLOUDFRONT_DOMAIN"
+languageCode = "es"
+title = "Mi Blog AWS DevOps"
+theme = ""
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[permalinks]
+  posts = "/:slug/"
+
+[params]
+  description = "Blog de demostración - CI/CD con AWS"
+  author = "DevOps Team"
+  siteVersion = "v1.0"

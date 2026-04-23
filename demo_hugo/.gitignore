@@ -1,0 +1,25 @@
+# Hugo
+hugo-site/public/
+hugo-site/resources/
+hugo-site/.hugo_build.lock
+
+# CDK
+infrastructure/node_modules/
+infrastructure/dist/
+infrastructure/cdk.out/
+infrastructure/*.js
+infrastructure/*.d.ts
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env
+.env
+.env.local

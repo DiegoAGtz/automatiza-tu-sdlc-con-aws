@@ -1,0 +1,9 @@
+{
+  "name": "automatiza-tu-sdlc-con-aws",
+  "private": true,
+  "description": "AWS tech talk demos monorepo",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test"
+  }
+}

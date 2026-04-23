@@ -1,0 +1,5 @@
+packages:
+  - "demo_hugo/infrastructure"
+  - "demo_api/lambdas/*"
+  - "demo_api/packages/*"
+  - "demo_api/infrastructure"

@@ -1,0 +1,18 @@
+{
+  "name": "@demo-api/api-common",
+  "version": "1.0.0",
+  "description": "Shared middleware, errors, and response helpers for API Lambdas",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@middy/core": "^5.5.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^22.0.0",
+    "typescript": "~5.7.0"
+  }
+}

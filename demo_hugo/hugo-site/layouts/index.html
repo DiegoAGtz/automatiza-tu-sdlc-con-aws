@@ -1,0 +1,17 @@
+{{ define "main" }}
+<section class="hero">
+  {{ .Content }}
+</section>
+
+<section class="recent-posts">
+  <h2>Posts Recientes</h2>
+  {{ range first 5 (where .Site.RegularPages "Section" "posts") }}
+  <div class="post-card">
+    <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 de January, 2006" }}</time>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    <a href="{{ .Permalink }}" class="read-more">Leer más &rarr;</a>
+  </div>
+  {{ end }}
+</section>
+{{ end }}
