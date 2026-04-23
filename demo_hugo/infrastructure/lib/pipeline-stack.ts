@@ -97,7 +97,6 @@ export class PipelineStack extends cdk.Stack {
             pushFilter: [
               {
                 branchesIncludes: ['main'],
-                filePathsIncludes: ['demo_hugo/**'],
               },
             ],
           },
