@@ -11,7 +11,7 @@ Sitio estático generado con Hugo, desplegado automáticamente a AWS S3 + CloudF
 └─────────┘     └──────────────┘     └───────────┘     └────┘     └────────────┘
 ```
 
-**Flujo:** `git push` → CodePipeline detecta → CodeBuild instala Hugo y genera el sitio → sync a S3 → invalidación de cache CloudFront → sitio actualizado (~2-3 min).
+**Flujo:** `git push` → CodePipeline detecta → CodeBuild instala Hugo y genera el sitio → sync a S3 → invalidación de cache CloudFront → sitio actualizado (~2-3 min). 
 
 ## Stack Tecnológico
 
