@@ -73,6 +73,7 @@ export class PipelineStack extends cdk.Stack {
       repo: repo.split('/')[1],
       branch: 'main',
       output: sourceOutput,
+      triggerOnPush: false,
     });
 
     // CodeBuild action
