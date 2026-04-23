@@ -37,7 +37,7 @@ describe("getBooks handler", () => {
     const result = await getBooks(mockEvent);
 
     expect(result.statusCode).toBe(200);
-    expect(JSON.parse(result.body)).toEqual(books);
+    expect(JSON.parse(result.body)).toEqual({ books, count: 2 });
     expect(booksRepository.getAll).toHaveBeenCalledTimes(1);
   });
 
@@ -47,6 +47,6 @@ describe("getBooks handler", () => {
     const result = await getBooks(mockEvent);
 
     expect(result.statusCode).toBe(200);
-    expect(JSON.parse(result.body)).toEqual([]);
+    expect(JSON.parse(result.body)).toEqual({ books: [], count: 0 });
   });
 });
