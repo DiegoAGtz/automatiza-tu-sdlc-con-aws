@@ -6,5 +6,9 @@ import { PipelineStack } from "../lib/pipeline-stack";
 const app = new cdk.App();
 
 new PipelineStack(app, "BooksApiPipelineStack", {
+  env: {
+    account: "314146298455",
+    region: "us-east-1",
+  },
   description: "Books Recommended API - CI/CD Pipeline with Dev/QA/Prod stages",
 });

@@ -1,4 +1,4 @@
-baseURL = "https://CLOUDFRONT_DOMAIN"
+baseURL = "https://demo.diegoagtz.com"
 languageCode = "es"
 title = "Mi Blog AWS DevOps"
 

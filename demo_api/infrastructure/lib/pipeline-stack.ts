@@ -23,8 +23,8 @@ export class PipelineStack extends cdk.Stack {
     const repo = this.node.tryGetContext("repo") ?? "owner/automatiza-tu-sdlc-con-aws";
 
     const env: cdk.Environment = {
-      account: this.account,
-      region: this.region,
+      account: "314146298455",
+      region: "us-east-1",
     };
 
     const source = pipelines.CodePipelineSource.connection(repo, "main", {
