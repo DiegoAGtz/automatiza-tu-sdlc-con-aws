@@ -20,7 +20,7 @@ Sitio estático generado con Hugo, desplegado automáticamente a AWS S3 + CloudF
 | Generador estático | Hugo |
 | Hosting | Amazon S3 (privado, vía OAI) |
 | CDN | CloudFront (HTTPS, HTTP/2) |
-| IaC | AWS CDK v2 (TypeScript) |
+| IaC | AWS CDK v2 (TypeScript) |  
 | CI/CD | CodePipeline + CodeBuild |
 | Source | GitHub (webhook) |
 
