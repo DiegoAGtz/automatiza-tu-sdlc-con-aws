@@ -86,7 +86,7 @@ export class PipelineStack extends cdk.Stack {
 
     // CodePipeline
     new codepipeline.Pipeline(this, 'Pipeline', {
-      pipelineType: codepipeline.PipelineType.V2,
+      pipelineType: codepipeline.PipelineType.V1,
       pipelineName: `${this.stackName}`,
       artifactBucket,
       stages: [
