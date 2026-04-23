@@ -14,7 +14,7 @@
     ]
   },
   "context": {
-    "connectionArn": "arn:aws:codeconnections:us-east-1:314146298455:connection/1968fa5a-70e2-4a3a-8634-8224da5656c5",
+    "connectionArn": "arn:aws:codeconnections:us-east-1:314146298455:connection/b61dc2cc-5b3c-48f2-b720-45f8d72d76a6",
     "repo": "diegoagtz/automatiza-tu-sdlc-con-aws"
   }
 }
