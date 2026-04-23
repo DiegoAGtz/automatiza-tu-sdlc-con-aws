@@ -1,0 +1,3 @@
+[submodule "demo_hugo/hugo-site/themes/PaperMod"]
+	path = demo_hugo/hugo-site/themes/PaperMod
+	url = https://github.com/adityatelange/hugo-PaperMod.git
