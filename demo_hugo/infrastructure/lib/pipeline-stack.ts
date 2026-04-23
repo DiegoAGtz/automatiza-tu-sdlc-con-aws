@@ -65,7 +65,9 @@ export class PipelineStack extends cdk.Stack {
     const sourceOutput = new codepipeline.Artifact('SourceOutput');
     const buildOutput = new codepipeline.Artifact('BuildOutput');
 
-    // GitHub source via CodeStar Connection
+    // GitHub source via CodeStar Connection.
+    // triggerOnPush is disabled — the V2 trigger below handles push events
+    // with a file path filter so the pipeline only runs on demo_hugo/** changes.
     const sourceAction = new codepipeline_actions.CodeStarConnectionsSourceAction({
       actionName: 'GitHub_Source',
       connectionArn,
@@ -73,7 +75,7 @@ export class PipelineStack extends cdk.Stack {
       repo: repo.split('/')[1],
       branch: 'main',
       output: sourceOutput,
-      triggerOnPush: true,
+      triggerOnPush: false,
     });
 
     // CodeBuild action
@@ -84,9 +86,9 @@ export class PipelineStack extends cdk.Stack {
       outputs: [buildOutput],
     });
 
-    // CodePipeline
-    new codepipeline.Pipeline(this, 'Pipeline', {
-      pipelineType: codepipeline.PipelineType.V1,
+    // V2 pipeline — required for Git-based triggers with file path filters
+    const pipeline = new codepipeline.Pipeline(this, 'Pipeline', {
+      pipelineType: codepipeline.PipelineType.V2,
       pipelineName: `${this.stackName}`,
       artifactBucket,
       stages: [
@@ -100,6 +102,23 @@ export class PipelineStack extends cdk.Stack {
         },
       ],
     });
+
+    // V2 trigger: only fire on pushes to main that touch demo_hugo/**
+    const cfnPipeline = pipeline.node.defaultChild as codepipeline.CfnPipeline;
+    cfnPipeline.addPropertyOverride('Triggers', [
+      {
+        ProviderType: 'CodeStarSourceConnection',
+        GitConfiguration: {
+          SourceActionName: 'GitHub_Source',
+          Push: [
+            {
+              Branches: { Includes: ['main'] },
+              FilePaths: { Includes: ['demo_hugo/**'] },
+            },
+          ],
+        },
+      },
+    ]);
 
     // Outputs
     new cdk.CfnOutput(this, 'PipelineName', {

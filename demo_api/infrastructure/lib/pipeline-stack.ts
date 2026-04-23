@@ -71,13 +71,17 @@ export class PipelineStack extends cdk.Stack {
     // Force pipeline build so we can access the underlying L1 resource
     pipeline.buildPipeline();
 
-    // Add V2 trigger with file path filter via L1 escape hatch
+    // Add V2 trigger with file path filter via L1 escape hatch.
+    // SourceActionName must match the action name CDK generates for the source action.
+    // pipelines.CodePipelineSource.connection() names the action after the repo:
+    // "<owner>_<repo>" with slashes replaced by underscores and hyphens kept.
+    const sourceActionName = repo.replace("/", "_");
     const cfnPipeline = pipeline.pipeline.node.defaultChild as codepipeline.CfnPipeline;
     cfnPipeline.addPropertyOverride("Triggers", [
       {
         ProviderType: "CodeStarSourceConnection",
         GitConfiguration: {
-          SourceActionName: repo.replace("/", "_"),
+          SourceActionName: sourceActionName,
           Push: [
             {
               Branches: { Includes: ["main"] },
