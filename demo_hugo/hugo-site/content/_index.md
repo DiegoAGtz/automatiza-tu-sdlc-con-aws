@@ -4,7 +4,7 @@ title: "¡Bienvenido a Mi Blog AWS DevOps!"
 
 ## Automatiza tu flujo de desarrollo con AWS
 
-Este sitio es una demostración en vivo de un pipeline CI/CD completo usando **AWS CodePipeline**, **CodeBuild**, **S3** y **CloudFront**.
+Este sitio es una demostración en vivo de un pipeline de CI/CD completo usando **AWS CodePipeline**, **CodeBuild**, **S3** y **CloudFront**.
 
 Cada vez que hacemos `git push`, el contenido se despliega automáticamente a producción en menos de 3 minutos.
 
