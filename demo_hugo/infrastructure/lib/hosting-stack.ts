@@ -2,7 +2,13 @@ import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
+import * as acm from 'aws-cdk-lib/aws-certificatemanager';
+import * as route53 from 'aws-cdk-lib/aws-route53';
+import * as route53Targets from 'aws-cdk-lib/aws-route53-targets';
 import { Construct } from 'constructs';
+
+const DOMAIN_NAME = 'diegoagtz.com';
+const SUBDOMAIN = `demo.${DOMAIN_NAME}`;
 
 export class HostingStack extends cdk.Stack {
   public readonly siteBucket: s3.Bucket;
@@ -10,6 +16,15 @@ export class HostingStack extends cdk.Stack {
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+
+    const zone = route53.HostedZone.fromLookup(this, 'Zone', {
+      domainName: DOMAIN_NAME,
+    });
+
+    const certificate = new acm.Certificate(this, 'Certificate', {
+      domainName: SUBDOMAIN,
+      validation: acm.CertificateValidation.fromDns(zone),
+    });
 
     // S3 Bucket para el sitio estático
     this.siteBucket = new s3.Bucket(this, 'SiteBucket', {
@@ -34,6 +49,8 @@ export class HostingStack extends cdk.Stack {
         compress: true,
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
       },
+      domainNames: [SUBDOMAIN],
+      certificate,
       defaultRootObject: 'index.html',
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
       httpVersion: cloudfront.HttpVersion.HTTP2,
@@ -53,6 +70,15 @@ export class HostingStack extends cdk.Stack {
       ],
     });
 
+    // Route53 alias record
+    new route53.ARecord(this, 'AliasRecord', {
+      zone,
+      recordName: SUBDOMAIN,
+      target: route53.RecordTarget.fromAlias(
+        new route53Targets.CloudFrontTarget(this.distribution),
+      ),
+    });
+
     // Outputs
     new cdk.CfnOutput(this, 'BucketName', {
       value: this.siteBucket.bucketName,
@@ -66,14 +92,8 @@ export class HostingStack extends cdk.Stack {
       exportName: `${this.stackName}-distribution-id`,
     });
 
-    new cdk.CfnOutput(this, 'DistributionDomain', {
-      value: this.distribution.distributionDomainName,
-      description: 'CloudFront distribution domain name',
-      exportName: `${this.stackName}-distribution-domain`,
-    });
-
     new cdk.CfnOutput(this, 'SiteUrl', {
-      value: `https://${this.distribution.distributionDomainName}`,
+      value: `https://${SUBDOMAIN}`,
       description: 'Full URL of the deployed site',
     });
   }
